@@ -14,7 +14,7 @@ def sunsetfunkcia():
 	sunseth = int(sunset[0])
 	sunsetm = int(sunset[1])
 	nowt = datetime.datetime.now()
-	nowh = nowt.hour+15
+	nowh = nowt.hour+13
 	if nowh<0:
 		nowh=nowh-24
 	nowm = nowt.minute
