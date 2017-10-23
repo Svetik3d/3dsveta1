@@ -14,9 +14,9 @@ def sunsetfunkcia():
 	sunseth = int(sunset[0])
 	sunsetm = int(sunset[1])
 	nowt = datetime.datetime.now()
-	nowh = nowt.hour-3
+	nowh = nowt.hour+15
 	if nowh<0:
-		nowh=24+nowh
+		nowh=nowh-24
 	nowm = nowt.minute
 	if nowh >= sunseth and sunsetm >= nowm and nowm < sunsetm+5:
 		return "ON"
