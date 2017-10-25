@@ -7,16 +7,13 @@ import requests
 import datetime
 
 URL = 'https://api.sunrise-sunset.org/json?lat=55.729887&lng=38.941911&date=today&formatted=1'
-date = 0
+uts = 1
 
 def sunsetfunkcia(nowh = datetime.datetime.now().hour, 	nowm = datetime.datetime.now().minute):
-	if date != datetime.date.day:
-		date = datetime.date.day
-		result = requests.get(URL).json()["results"]["sunset"]
-		sunset = result.split(":")
-		sunseth = int(sunset[0])+13
-		sunsetm = int(sunset[1])
-		print 'СХОДИЛ ЗА ДАТОЙ'
+	result = requests.get(URL).json()["results"]["sunset"]
+	sunset = result.split(":")
+	sunseth = int(sunset[0])+12+uts
+	sunsetm = int(sunset[1])
 	if sunseth>24:
 		sunseth=sunseth-24
 	if nowh == sunseth and sunsetm >= nowm and nowm < sunsetm+5:
