@@ -36,12 +36,15 @@ def sunsetfunkcia(nowh = datetime.datetime.now().hour, 	nowm = datetime.datetime
 				sunseth, sunsetm = settime()
 	if sunseth>24:
 		sunseth=sunseth-24
-	if sunseth <= nowh < 20:
+	if sunseth == nowh  and sunsetm <= nowm:
+		return "ON"
+	if sunseth < nowh < 20:
 		return "ON"
 	if nowh >=20 or nowh<sunseth:
 		return "OFF"
+	if nowh == sunseth or nowm<sunsetm:
+		return "OFF"
 
 for h in range(24):
-	for m in range(0,60,5):
-		print str(h)+":"+str(m)
-		print sunsetfunkcia(h,m)
+	for m in range(0,60,1):
+		print str(h)+":"+str(m)+ " "+str(sunsetfunkcia(h,m))
