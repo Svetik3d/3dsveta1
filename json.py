@@ -9,6 +9,7 @@ import datetime
 URL = 'https://api.sunrise-sunset.org/json?lat=55.729887&lng=38.941911&date=today&formatted=1'
 uts = 1
 
+
 def sunsetfunkcia(nowh = datetime.datetime.now().hour, 	nowm = datetime.datetime.now().minute):
 	result = requests.get(URL).json()["results"]["sunset"]
 	sunset = result.split(":")
@@ -16,11 +17,12 @@ def sunsetfunkcia(nowh = datetime.datetime.now().hour, 	nowm = datetime.datetime
 	sunsetm = int(sunset[1])
 	if sunseth>24:
 		sunseth=sunseth-24
-	if nowh == sunseth and sunsetm >= nowm and nowm < sunsetm+5:
+	if sunseth <= nowh < 20:
 		return "ON"
-	if nowh >=20 and nowm>=5:
+	if nowh >=20 or nowh<sunseth:
 		return "OFF"
 
 for h in range(24):
 	for m in range(0,60,5):
+		print str(h)+":"+str(m)
 		print sunsetfunkcia(h,m)
