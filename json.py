@@ -12,31 +12,21 @@ uts = 1
 
 def sunsetfunkcia(nowh = datetime.datetime.now().hour, 	nowm = datetime.datetime.now().minute):
 	nalf = os.path.exists("/tmp/saved_time")
-	if nalf == False:
-		with open("/tmp/saved_time", "w") as files:
-			d  = datetime.datetime.now().day
-			result = requests.get(URL).json()["results"]["sunset"]
-			sunset = result.split(":")
-			sunseth = int(sunset[0])+12+uts
-			sunsetm = int(sunset[1])
-			sumarno = str(d) +":"+ str(sunseth)+":"+str(sunsetm)
-			files.write(sumarno)
-	else:
-		with open("/tmp/saved_time", "r") as files:
-			d  = datetime.datetime.now().day
-			w = files.read().split(":")
-			date = w[0]
-			if date == str(d):
-				sunseth = int(w[1])
-				sunsetm = int(w[2])
-			else:
-				with open("/tmp/saved_time", "w") as files:
-					result = requests.get(URL).json()["results"]["sunset"]
-					sunset = result.split(":")
-					sunseth = int(sunset[0])+12+uts
-					sunsetm = int(sunset[1])
-					sumarno = str(d) +":"+ str(sunseth)+":"+str(sunsetm)
-					files.write(sumarno)
+	with open("/tmp/saved_time", "r") as files:
+		d  = datetime.datetime.now().day
+		w = files.read().split(":")
+		date = w[0]
+		if date == str(d) and nalf == True:
+			sunseth = int(w[1])
+			sunsetm = int(w[2])
+		if nalf == False or date != str(d):
+			with open("/tmp/saved_time", "w") as files:
+				result = requests.get(URL).json()["results"]["sunset"]
+				sunset = result.split(":")
+				sunseth = int(sunset[0])+12+uts
+				sunsetm = int(sunset[1])
+				sumarno = str(d) +":"+ str(sunseth)+":"+str(sunsetm)
+				files.write(sumarno)
 	if sunseth>24:
 		sunseth=sunseth-24
 	if sunseth <= nowh < 20:
