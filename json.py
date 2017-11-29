@@ -9,12 +9,17 @@ import os
 
 URL = 'https://api.sunrise-sunset.org/json?lat=55.729887&lng=38.941911&date=today&formatted=1'
 uts = 1
+
 def settime():
 	with open("/tmp/saved_time", "w") as files:
 		d  = datetime.datetime.now().day
 		result = requests.get(URL).json()["results"]["sunset"]
 		sunset = result.split(":")
-		sunseth = int(sunset[0])+12+uts
+		pmam = sunset[2].split(" ")[1]
+		if pmam == "PM":
+			sunseth = int(sunset[0])+uts
+		else:
+			sunseth = int(sunset[0])+12+uts
 		sunsetm = int(sunset[1])
 		sumarno = str(d) +":"+ str(sunseth)+":"+str(sunsetm)
 		files.write(sumarno)
@@ -34,8 +39,6 @@ def sunsetfunkcia(nowh = datetime.datetime.now().hour, nowm = datetime.datetime.
 				sunsetm = int(w[2])
 			else:
 				sunseth, sunsetm = settime()
-	if sunseth > 24:
-		sunseth = sunseth - 24
 	if sunseth == nowh  and sunsetm <= nowm:
 		return "ON"
 	if sunseth < nowh < 20:
@@ -46,5 +49,5 @@ def sunsetfunkcia(nowh = datetime.datetime.now().hour, nowm = datetime.datetime.
 		return "OFF"
 
 for h in range(24):
-	for m in range(0,60,1):
+	for m in range(0,60,10):
 		print str(h)+":"+str(m)+ " "+str(sunsetfunkcia(h,m))
