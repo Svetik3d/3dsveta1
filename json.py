@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+ #!/usr/bin/env python
 # -*-coding: utf-8 -*-
 # vim: sw=4 ts=4 expandtab ai
 
@@ -17,9 +17,12 @@ def settime():
 		sunset = result.split(":")
 		pmam = sunset[2].split(" ")[1]
 		if pmam == "PM":
-			sunseth = int(sunset[0])+uts
+			if sunseth == "12":
+				sunseth = int(sunset[0])+uts
+			else:
+				sunseth = int(sunset[0])+12+uts
 		else:
-			sunseth = int(sunset[0])+12+uts
+			sunseth = int(sunset[0])+uts
 		sunsetm = int(sunset[1])
 		sumarno = str(d) +":"+ str(sunseth)+":"+str(sunsetm)
 		files.write(sumarno)
