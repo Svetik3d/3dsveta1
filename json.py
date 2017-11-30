@@ -1,4 +1,4 @@
- #!/usr/bin/env python
+#!/usr/bin/env python
 # -*-coding: utf-8 -*-
 # vim: sw=4 ts=4 expandtab ai
 
@@ -16,6 +16,7 @@ def settime():
 		result = requests.get(URL).json()["results"]["sunset"]
 		sunset = result.split(":")
 		pmam = sunset[2].split(" ")[1]
+		sunseth = sunset[0]
 		if pmam == "PM":
 			if sunseth == "12":
 				sunseth = int(sunset[0])+uts
